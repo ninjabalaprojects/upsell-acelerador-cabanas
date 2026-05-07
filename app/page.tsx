@@ -2,6 +2,7 @@
 
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import Script from "next/script";
 import {
   AlertTriangle,
   Check,
@@ -70,11 +71,17 @@ function FadeUp({
   );
 }
 
+// ─── Scroll to Kiwify checkout ───────────────────────────────────────────────
+function scrollToCheckout() {
+  document.getElementById("checkout")?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
 // ─── CTA Button ─────────────────────────────────────────────────────────────
 function CTAButton({ children, size = "lg" }: { children: React.ReactNode; size?: "lg" | "xl" }) {
   const py = size === "xl" ? "py-6" : "py-5";
   return (
     <motion.button
+      onClick={scrollToCheckout}
       className={`btn-gold w-full ${py} px-6 rounded-2xl font-display text-base sm:text-lg md:text-xl leading-tight shadow-2xl cursor-pointer`}
       animate={{
         boxShadow: [
@@ -89,6 +96,56 @@ function CTAButton({ children, size = "lg" }: { children: React.ReactNode; size?
     >
       {children}
     </motion.button>
+  );
+}
+
+// ─── Kiwify Button ───────────────────────────────────────────────────────────
+function KiwifyButton() {
+  return (
+    <div>
+      <div
+        id="kiwify-upsell-VmhtyZE"
+        data-upsell-url=""
+        data-downsell-url=""
+        style={{ textAlign: "center" }}
+      >
+        <button
+          id="kiwify-upsell-trigger-VmhtyZE"
+          style={{
+            backgroundColor: "#27AF60",
+            padding: "18px 24px",
+            cursor: "pointer",
+            color: "#FFFFFF",
+            fontWeight: 800,
+            borderRadius: "16px",
+            border: "none",
+            fontSize: "18px",
+            width: "100%",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            fontFamily: "var(--font-montserrat), sans-serif",
+            boxShadow: "0 0 30px rgba(39,175,96,0.35), 0 8px 32px rgba(0,0,0,0.5)",
+            transition: "all 0.2s",
+          }}
+        >
+          🚀 SÍ, QUIERO ACELERAR MI CONSTRUCCIÓN
+        </button>
+        <div
+          id="kiwify-upsell-cancel-trigger-VmhtyZE"
+          style={{
+            marginTop: "1.25rem",
+            cursor: "pointer",
+            fontSize: "13px",
+            textDecoration: "underline",
+            fontFamily: "var(--font-inter), sans-serif",
+            color: "rgba(242,237,228,0.3)",
+            letterSpacing: "0.02em",
+          }}
+        >
+          No gracias, continuar sin el Acelerador
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -670,7 +727,7 @@ function BenefitsSection() {
 // ─── SECTION 8 — Offer ───────────────────────────────────────────────────────
 function OfferSection() {
   return (
-    <section className="py-20 px-5 bg-canvas relative overflow-hidden" id="comprar">
+    <section className="py-20 px-5 bg-canvas relative overflow-hidden" id="checkout">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gold/5 blur-[100px] pointer-events-none" />
 
       <div className="max-w-lg mx-auto">
@@ -734,10 +791,8 @@ function OfferSection() {
               <p className="font-body text-warm-white/40 text-xs mt-2">Pago único • Sin suscripciones • Tuyo para siempre</p>
             </div>
 
-            {/* CTA */}
-            <CTAButton size="xl">
-              🚀 SÍ, QUIERO ACELERAR MI CONSTRUCCIÓN
-            </CTAButton>
+            {/* Kiwify Checkout Button */}
+            <KiwifyButton />
 
             {/* Badges */}
             <div className="flex flex-wrap items-center justify-center gap-3 mt-5 text-warm-white/40 text-xs font-body">
@@ -993,6 +1048,7 @@ export default function UpsellPage() {
       <FinalCTASection />
       <FAQSection />
       <Footer />
+      <Script src="https://snippets.kiwify.com/upsell/upsell.min.js" strategy="afterInteractive" />
     </main>
   );
 }
